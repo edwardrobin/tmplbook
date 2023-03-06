@@ -51,4 +51,15 @@ class FunctionPtr<R(Args...)> {
 
   // invocation:
   R operator()(Args... args) const;  // see functionptr-cpinv.hpp
+
+  friend bool operator==(FunctionPtr const& f1, FunctionPtr const& f2) {
+    if (!f1 || !f2) {
+      return !f1 && !f2;
+    }
+    return f1.bridge->equals(f2.bridge);
+  }
+
+  friend bool operator!=(FunctionPtr const& f1, FunctionPtr const& f2) {
+    return !(f1 == f2);
+  }
 };
